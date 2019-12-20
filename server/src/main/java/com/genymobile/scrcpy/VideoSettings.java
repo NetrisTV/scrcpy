@@ -71,9 +71,9 @@ public class VideoSettings {
         temp.put(iFrameInterval);
         int width = 0;
         int height = 0;
-        if (this.crop != null) {
-            width = this.crop.width();
-            height = this.crop.height();
+        if (this.bounds != null) {
+            width = this.bounds.getWidth();
+            height = this.bounds.getHeight();
         }
         temp.putShort((short) width);
         temp.putShort((short) height);
