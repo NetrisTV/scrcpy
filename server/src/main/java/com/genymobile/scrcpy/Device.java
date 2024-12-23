@@ -29,6 +29,9 @@ public final class Device {
     public static final int LOCK_VIDEO_ORIENTATION_INITIAL = -2;
 
     private static final ServiceManager SERVICE_MANAGER = new ServiceManager();
+    public static ServiceManager getServiceManager() {
+        return SERVICE_MANAGER;
+    }
 
     public interface RotationListener {
         void onRotationChanged(int rotation);
@@ -134,6 +137,10 @@ public final class Device {
 
     public void applyNewVideoSetting(VideoSettings videoSettings) {
         this.setScreenInfo(ScreenInfo.computeScreenInfo(Device.getDisplayInfo(displayId), videoSettings));
+    }
+
+    public int getDisplayId() {
+        return displayId;
     }
 
     public synchronized void setScreenInfo(ScreenInfo screenInfo) {
