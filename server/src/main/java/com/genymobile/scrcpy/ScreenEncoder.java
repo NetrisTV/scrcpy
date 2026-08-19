@@ -144,6 +144,17 @@ public class ScreenEncoder implements Connection.StreamInvalidateListener, Runna
                     alive = encode(codec);
                     // do not call stop() on exception, it would trigger an IllegalStateException
                     codec.stop();
+                } catch (IllegalStateException | IllegalArgumentException e) {
+                    // MediaCodec entered an error state (this happens under load with
+                    // emulator software encoders): recreate the codec and keep
+                    // streaming instead of letting the exception kill the process.
+                    Ln.e("Codec error, restarting encoder", e);
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                    }
+                    alive = connection.hasConnections();
                 } finally {
                     if (display != null) {
                         destroyDisplay(display);
